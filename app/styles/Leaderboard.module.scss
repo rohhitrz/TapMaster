@@ -1,0 +1,125 @@
+.leaderboard {
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 0.5fr 1.5fr 1fr;
+    
+    .date {
+      display: none;
+    }
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 0.5fr 1.5fr 1fr;
+    
+    .date {
+      display: none;
+    }
+  }
+}
+
+.rank {
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+}
+
+.score {
+  font-weight: bold;
+  text-align: center;
+  color: var(--accent);
+}
+
+.date {
+  opacity: 0.8;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topThree {
+  background-color: rgba(255, 230, 109, 0.1);
+  font-weight: bold;
+}
+
+.medal {
+  &.medal1 {
+    color: gold;
+  }
+  
+  &.medal2 {
+    color: silver;
+  }
+  
+  &.medal3 {
+    color: #cd7f32; // bronze
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  margin: 0 auto;
+  max-width: 500px;
+} 

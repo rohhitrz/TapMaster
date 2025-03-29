@@ -1,0 +1,22 @@
+.themeToggle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border);
+  color: var(--foreground);
+  border-radius: 8px;
+  position: relative;
+  z-index: 10;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+} 
