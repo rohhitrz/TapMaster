@@ -74,7 +74,7 @@ export default function Home() {
         >
           <h3>How to Play</h3>
           <ol>
-            <li>Click the BIG "Tap!" button as fast as you can</li>
+            <li>Click the BIG &ldquo;Tap!&rdquo; button as fast as you can</li>
             <li>You have 10 seconds to achieve your best score</li>
             <li>Each tap counts as one point</li>
             <li>Beat the high score to top the leaderboard!</li>

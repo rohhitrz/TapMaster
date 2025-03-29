@@ -1,7 +1,6 @@
 'use client';
 
 import React, { ButtonHTMLAttributes, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import VanillaTilt from 'vanilla-tilt';
 import styles from '../styles/Button.module.scss';
 
@@ -32,21 +31,23 @@ export const Button: React.FC<ButtonProps> = ({
     }
     
     return () => {
-      if (buttonRef.current && tilt) {
-        // @ts-ignore - vanilla-tilt adds this property to the element
-        buttonRef.current.vanillaTilt?.destroy();
+      if (tilt) {
+        const element = buttonRef.current;
+        if (element) {
+          // @ts-expect-error - vanilla-tilt adds this property to the element
+          element.vanillaTilt?.destroy();
+        }
       }
     };
   }, [tilt]);
 
   return (
-    <motion.button
+    <button
       ref={buttonRef}
       className={`${styles.button} ${styles[variant]} ${styles[size]} ${className || ''}`}
-      whileTap={{ scale: 0.95 }}
       {...props}
     >
       {children}
-    </motion.button>
+    </button>
   );
 }; 

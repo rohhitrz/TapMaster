@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import useSound from 'use-sound';
 import ReactConfetti from 'react-confetti';
@@ -66,6 +66,39 @@ export default function Game() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
+  // End game function
+  const endGame = useCallback(() => {
+    clearInterval(timerRef.current!);
+    clearInterval(messageTimerRef.current!);
+    clearInterval(backgroundTimerRef.current!);
+    setGameState('finished');
+    playGameOver();
+    
+    // Check if it's a high score
+    try {
+      let leaderboard: Score[] = [];
+      const storedLeaderboard = localStorage.getItem('leaderboard');
+      
+      if (storedLeaderboard) {
+        leaderboard = JSON.parse(storedLeaderboard);
+      } else {
+        // Use mock data for first time
+        leaderboard = [...mockLeaderboard];
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+      }
+      
+      const sortedScores = [...leaderboard].sort((a, b) => b.score - a.score);
+      setHighScore(sortedScores[0]?.score || 0);
+      
+      // Check if current score is in top 3
+      if (sortedScores.length < 3 || score > sortedScores[2].score) {
+        setIsTopScore(true);
+      }
+    } catch (error) {
+      console.error('Error checking high score:', error);
+    }
+  }, [score, playGameOver]);
+  
   // Start game function
   const startGame = useCallback(() => {
     setGameState('playing');
@@ -100,40 +133,7 @@ export default function Game() {
         gameContainer.style.backgroundColor = `hsla(${hue}, 80%, 60%, 0.1)`;
       }
     }, 2000);
-  }, [playGameStart]);
-  
-  // End game function
-  const endGame = useCallback(() => {
-    clearInterval(timerRef.current!);
-    clearInterval(messageTimerRef.current!);
-    clearInterval(backgroundTimerRef.current!);
-    setGameState('finished');
-    playGameOver();
-    
-    // Check if it's a high score
-    try {
-      let leaderboard: Score[] = [];
-      const storedLeaderboard = localStorage.getItem('leaderboard');
-      
-      if (storedLeaderboard) {
-        leaderboard = JSON.parse(storedLeaderboard);
-      } else {
-        // Use mock data for first time
-        leaderboard = [...mockLeaderboard];
-        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-      }
-      
-      const sortedScores = [...leaderboard].sort((a, b) => b.score - a.score);
-      setHighScore(sortedScores[0]?.score || 0);
-      
-      // Check if current score is in top 3
-      if (sortedScores.length < 3 || score > sortedScores[2].score) {
-        setIsTopScore(true);
-      }
-    } catch (error) {
-      console.error('Error checking high score:', error);
-    }
-  }, [score, playGameOver]);
+  }, [playGameStart, endGame]);
   
   // Clean up function
   useEffect(() => {
